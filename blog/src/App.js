@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './App.css';
+import React from 'react';
+import YouTube from 'react-youtube';
 
 function App() {
   // 중괄호 {} 문법을 알아보자
@@ -24,6 +26,10 @@ function App() {
 
   return (
     <div className="App">
+      <YouTube
+      videoId='qQsVjNhFJ2o'
+      >
+      </YouTube>
       <div className="black-nav">
         <h4 id={ post }>ReactBlog</h4>
       </div>
