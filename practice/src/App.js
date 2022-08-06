@@ -40,21 +40,21 @@ function App() {
           allowFullScreen
       ></iframe>
       <div>
-        <ImBackward2 style={{'margin':'10px'}} onClick={()=>{
+        <ImBackward2 size="24" style={{'margin':'10px'}} onClick={()=>{
           setIdx((idx-1+videoList.length)%videoList.length)
           setIsPlay(true)
         }}></ImBackward2>
 
         {
-          isPlay ? <ImPause2 style={{'margin':'10px'}} onClick={()=>{
+          isPlay ? <ImPause2 size="24" style={{'margin':'10px'}} onClick={()=>{
             isPlayVideo()
           }}></ImPause2> :
-          <ImPlay3 style={{'margin':'10px'}} onClick={()=>{
+          <ImPlay3 size="24" style={{'margin':'10px'}} onClick={()=>{
             isPlayVideo()
           }}></ImPlay3>
         }
 
-        <ImForward3 style={{'margin':'10px'}} onClick={()=>{
+        <ImForward3 size="24" style={{'margin':'10px'}} onClick={()=>{
           setIdx((idx+1)%videoList.length)
           setIsPlay(true)
         }}></ImForward3>
