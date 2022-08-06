@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import videos from './videos.js'
+import { ImPlay3, ImPause2, ImBackward2, ImForward3 } from "react-icons/im";
 
 function App() {
   const videoList = videos
@@ -39,19 +40,24 @@ function App() {
           allowFullScreen
       ></iframe>
       <div>
-        <button style={{'margin':'10px'}} onClick={()=>{
+        <ImBackward2 style={{'margin':'10px'}} onClick={()=>{
           setIdx((idx-1+videoList.length)%videoList.length)
           setIsPlay(true)
-        }}>이전곡</button>
-        {       
-          <button onClick={()=>{
+        }}></ImBackward2>
+
+        {
+          isPlay ? <ImPause2 style={{'margin':'10px'}} onClick={()=>{
             isPlayVideo()
-          }}>{isPlay ? "정지" : "재생"}</button>
-        }       
-        <button style={{'margin':'10px'}} onClick={()=>{
+          }}></ImPause2> :
+          <ImPlay3 style={{'margin':'10px'}} onClick={()=>{
+            isPlayVideo()
+          }}></ImPlay3>
+        }
+
+        <ImForward3 style={{'margin':'10px'}} onClick={()=>{
           setIdx((idx+1)%videoList.length)
           setIsPlay(true)
-        }}>다음곡</button>
+        }}></ImForward3>
       </div>
     </div>
   );
