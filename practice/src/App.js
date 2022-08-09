@@ -1,64 +1,44 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import videos from './videos.js'
-import { ImPlay3, ImPause2, ImBackward2, ImForward3 } from "react-icons/im";
+import Player from './Player';
+import { Button } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
-  const videoList = videos
-  const [idx, setIdx] = useState(0)
-  const [isPlay, setIsPlay] = useState(false)
-  useEffect(()=>{
-    if (isPlay) {
-      document
-        .querySelector('#ytVideo')
-        .contentWindow.postMessage(
-          '{"event":"command","func":"' + 'playVideo' + '","args":""}',
-          '*',
-        );
-    } else {
-      document
-        .querySelector('#ytVideo')
-        .contentWindow.postMessage(
-          '{"event":"command","func":"' + 'pauseVideo' + '","args":""}',
-          '*',
-        );
-    }
-  }, [isPlay])
-  const isPlayVideo = () => {
-    setIsPlay(!isPlay)
-  };
+  let [isPlay, setIsPlay] = useState(null)
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Header className='text-center' as="h3"><strong>듣고싶은 장르 Play 버튼 클릭!</strong></Popover.Header>
+      <Popover.Body>
+        <p><strong className='genreText'>ooo할때 ooo 하는 테마1<Button onClick={()=>{
+          setIsPlay(1)
+        }} id='playBtn' size='sm'>Play</Button></strong></p><hr></hr>
+        <p><strong className='genreText'>ooo할때 ooo 하는 테마1<Button onClick={()=>{
+          setIsPlay(2)
+        }} id='playBtn' size='sm'>Play</Button></strong></p><hr></hr>
+        <p><strong className='genreText'>ooo할때 ooo 하는 테마1<Button onClick={()=>{
+          setIsPlay(3)
+        }} id='playBtn' size='sm'>Play</Button></strong></p><hr></hr>
+        <p><strong className='genreText'>ooo할때 ooo 하는 테마1<Button onClick={()=>{
+          setIsPlay(4)
+        }} id='playBtn' size='sm'>Play</Button></strong></p>
+      </Popover.Body>
+    </Popover>
+  );
 
   return (
     <div className="App">
-      <iframe
-          id='ytVideo'
-          width='800px'
-          height='500px'
-          src={`https://www.youtube.com/embed/${videoList[idx]}?autoplay=1&mute=0&autohide='2'&modestbranding=1&enablejsapi=1&version=3&playerapiid=ytplayer`}
-          frameBorder='0'
-          allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-      ></iframe>
-      <div>
-        <ImBackward2 size="24" style={{'margin':'10px'}} onClick={()=>{
-          setIdx((idx-1+videoList.length)%videoList.length)
-          setIsPlay(true)
-        }}></ImBackward2>
+      <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+        <Button variant="success">음악듣기</Button>
+      </OverlayTrigger>
+      {
+        isPlay ? <Player /> : null
+      }
 
-        {
-          isPlay ? <ImPause2 size="24" style={{'margin':'10px'}} onClick={()=>{
-            isPlayVideo()
-          }}></ImPause2> :
-          <ImPlay3 size="24" style={{'margin':'10px'}} onClick={()=>{
-            isPlayVideo()
-          }}></ImPlay3>
-        }
-
-        <ImForward3 size="24" style={{'margin':'10px'}} onClick={()=>{
-          setIdx((idx+1)%videoList.length)
-          setIsPlay(true)
-        }}></ImForward3>
-      </div>
     </div>
   );
 }
