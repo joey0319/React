@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import ReactDOM from "react-dom";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import "./App.css";
 
@@ -18,11 +17,11 @@ const RenderTime = ({ remainingTime }) => {
   }
 
   // force one last re-render when the time is over to tirgger the last animation
-  // if (remainingTime === 0) {
-  //   setTimeout(() => {
-  //     setOneLastRerender((val) => val + 1);
-  //   }, 20);
-  // }
+  if (remainingTime === 0) {
+    setTimeout(() => {
+      setOneLastRerender((val) => val + 1);
+    }, 20);
+  }
 
   const isTimeUp = isNewTimeFirstTick.current;
 
@@ -45,27 +44,37 @@ const RenderTime = ({ remainingTime }) => {
 };
 
 function App() {
+  let [shot, setShot] = useState(false)
+
   return (
     <div className="App">
-      <div className="timer-wrapper">
+      <button onClick={()=>{
+        setShot(true)
+        console.log(shot)
+      }}>take photo</button>
+      {
+        shot ? <div className="timer-wrapper">
         <CountdownCircleTimer
           isPlaying
-          duration={3}
+          duration={100}
           colors={["#004777"]}
           trailStrokeWidth={0}
           strokeWidth={0}
           onComplete={()=>{
             // 사진찍는 함수 삽입
+            setShot(false)
+            console.log('종료')
             
           }}
-        >
+        > 
           {RenderTime}
         </CountdownCircleTimer>
-      </div>
+      </div> : null
+      }
     </div>
   );
 }
 
 export default App;
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<App />, rootElement);
